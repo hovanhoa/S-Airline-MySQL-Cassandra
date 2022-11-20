@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var homeModel = require("../models/home");
-const Cart = require('../models/Cart');
+const Cart = require('../models/cart');
 
 router.get('/', async function(req, res) {
     res.render("index");
@@ -44,18 +44,16 @@ router.post('/add-to-cart', async function(req, res) {
 
 router.post('/allFlight', async function(req, res) {
     let listFlight = await homeModel.getAllFlight();
-    if(listFlight.length>0) {
-        res.json({
-            data: listFlight
-    })};
+    res.json({
+        data: listFlight
+    });
 });
 
 router.post('/allSeat', async function(req, res) {
     let listSeat = await homeModel.getAllSeat();
-    if(listSeat.length>0) {
-        res.json({
-            data: listSeat
-    })};
+    res.json({
+        data: listSeat
+    });
 });
 
 

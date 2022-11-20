@@ -58,7 +58,7 @@ block content
 										tbody
 											each account in accountList
 												tr 
-													td.text-center="0"+account.phone
+													td.text-center=account.phone
 													//- td.text-center(type="password")=account.password 
 													td.text-center=account.type=="2"? "Admin" : "User"
 													//- td.text-center=flight.to 

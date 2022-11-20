@@ -3,6 +3,8 @@ const authenicateUser = (permission) => {
         let userRole = null;
         if (req.session.user) {
             userRole = req.session.user.type;
+        } else {
+            return res.redirect('/login')
         }
         if (permission == req.session.user.type) {
             next();

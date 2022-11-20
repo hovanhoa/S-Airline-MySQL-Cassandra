@@ -39,8 +39,8 @@ searchButton.onclick = function () {
         for (let i = 0; i < data.data.length; i++) {
             data.data[i]["depart"] = moment(data.data[i]["depart"]).format('YYYY-MM-DD HH:mm:ss');
             if (
-                data.data[i]["from"] == listInfo[0] &&
-                data.data[i]["to"] == listInfo[1] &&
+                data.data[i]["from_airport"] == listInfo[0] &&
+                data.data[i]["to_airport"] == listInfo[1] &&
                 data.data[i]["depart"].substring(0, 10) == listInfo[2]
             ) {
                 listResult.push(data.data[i]);
@@ -70,9 +70,9 @@ searchButton.onclick = function () {
             document.getElementById("list_result").innerHTML +=
                 `<div class="item">
                     <div class="item-flex item-location">
-                        <span>${listResult[i].from}</span>
+                        <span>${listResult[i].from_airport}</span>
                         <img class="plane-logo" src=${imgsrc} alt="">
-                        <span>${listResult[i].to}</span>
+                        <span>${listResult[i].to_airport}</span>
                     </div>
                     <div class="item-time">
                         <span class="gray">Khởi hành:</span>
@@ -165,14 +165,14 @@ searchResult.onclick = function (event) {
             if(data.data[i]["id"] == id) listInfo.push(data.data[i]);
         }
         console.log(listInfo);
-        document.getElementById("from").innerHTML = '';
-        document.getElementById("to").innerHTML = '';
+        document.getElementById("from_airport").innerHTML = '';
+        document.getElementById("to_airport").innerHTML = '';
         document.getElementById("depart").innerHTML = '';
         document.getElementById("id").innerHTML = '';
         document.getElementById("price").innerHTML = '';
     
-        document.getElementById("from").innerHTML += listInfo[0]["from"];
-        document.getElementById("to").innerHTML += listInfo[0]["to"];
+        document.getElementById("from_airport").innerHTML += listInfo[0]["from_airport"];
+        document.getElementById("to_airport").innerHTML += listInfo[0]["to_airport"];
         document.getElementById("depart").innerHTML += listInfo[0]["depart"].toString().toLocaleString('en-US'); 
         document.getElementById("id").innerHTML += listInfo[0]["id"];
         document.getElementById("price").innerHTML += listInfo[0]["price"].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".") +" VND";

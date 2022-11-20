@@ -15,7 +15,7 @@ router.post("/", async function(req, res) {
         confirmPassword: req.body.password_confirmation,
         role: '1'
     }
-
+    console.log(userInput)
     const user = await loginModel.getOne(userInput.phone);
     if (user.length > 0) {
         console.log("This phone has already used");
@@ -26,8 +26,8 @@ router.post("/", async function(req, res) {
         try {
             const today = new Date();
             let day = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-            await loginModel.insertOne(userInput.phone, userInput.password, userInput.role, day);
-            await loginModel.insertClient(userInput.phone, userInput.name);
+            await loginModel.insertOne(userInput.phone, userInput.name,  userInput.password, userInput.role, day);
+            // await loginModel.insertClient(userInput.phone, userInput.name);
             return res.render("login/index");
         } catch (err) {
             console.log(err);
@@ -85,8 +85,8 @@ router.post("/checkOTP", async function(req, res) {
         try {
             const today = new Date();
             let day = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-            await loginModel.insertOne(userInput.phone, userInput.password, userInput.role, day);
-            await loginModel.insertClient(userInput.phone, userInput.name);
+            await loginModel.insertOne(userInput.phone, userInput.name, userInput.password, userInput.role, day);
+            // await loginModel.insertClient(userInput.phone, userInput.name);
             var userInfo = { status: "sign up" };
             var viewInfo = { data: userInfo };
             res.render("login/index", viewInfo);

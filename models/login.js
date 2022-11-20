@@ -1,38 +1,19 @@
-var mysql = require("mysql-await");
+const client = require('./db')
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "flight_ticket_booking",
-});
+var connection = client.client
 
-exports.insertOne = async function(phone, password, type, time) {
-    await connection.awaitQuery(
-        `INSERT INTO account (phone, password, type, create_time) VALUES (${phone}, "${password}", ${type}, "${time}");`
-    );
+exports.insertOne = async function (phone, name, password, type, time) {
+    await connection.execute(`INSERT INTO user (phone, name, password, type, create_time) VALUES (?, ?, ?, ?, ?);`, [phone, name, password, type, time], { prepare: true });
 };
 
-exports.insertClient = async function(phone, name) {
-    await connection.awaitQuery(
-        `INSERT INTO client (phone, name) VALUES (${phone}, "${name}");`
-    );
+// exports.getClient = async function (phone) {
+//     return await connection.execute(`SELECT * FROM user WHERE phone = '${phone}';`);
+// };
+
+exports.getOne = async function (phone) {
+    return (await connection.execute(`SELECT * FROM user WHERE phone = ?;`, [phone], { prepare: true })).rows
 };
 
-exports.getClient = async function(phone) {
-    return await connection.awaitQuery(
-        `SELECT * FROM client WHERE phone = ${phone};`
-    );
-};
-
-exports.getOne = async function(phone) {
-    return await connection.awaitQuery(
-        `SELECT * FROM account WHERE phone = ${phone};`
-    );
-};
-
-exports.updatePass = async function(phone, pass) {
-    await connection.awaitQuery(
-        `UPDATE account SET password ="${pass}" WHERE phone = ${phone};`
-    );
+exports.updatePass = async function (phone, pass) {
+    await connection.execute(`UPDATE user SET password = ? WHERE phone = ?;`, [pass, phone], { prepare: true });
 };

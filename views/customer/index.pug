@@ -15,7 +15,7 @@ block content
                 .col-4
                     .form-group
                         label Giới tính
-                        input.form-control(type='text' placeholder='' name='initName' value=listAccount[0].Sex?listAccount[0].Sex!="U"?listAccount[0].Sex=="M"?"Nam":"Nữ":"Không xác định":"Không xác định" readonly)
+                        input.form-control(type='text' placeholder='' name='sex' value=listAccount[0].sex?listAccount[0].sex!="U"?listAccount[0].sex=="M"?"Nam":"Nữ":"Không xác định":"Không xác định" readonly)
             .row 
                 .col-8
                     .form-group
@@ -29,7 +29,7 @@ block content
                 .col-4
                     .form-group
                         label Số điện thoại
-                        input.form-control(type='text' placeholder='' name='phoneNumber' value="0"+listAccount[0].phone readonly)
+                        input.form-control(type='text' placeholder='' name='phoneNumber' value=listAccount[0].phone readonly)
                 .col-4
                     .form-group
                         label Email
@@ -644,7 +644,7 @@ block content
                                 tr 
                                     td.text-center=Flight.id_flight
                                     td.text-center=Flight.name
-                                    td.text-center=Flight.id_seat.substring(0,3)
+                                    td.text-center=Flight.id.substring(0,3)
                                     td.text-center=Flight.from
                                     td.text-center=moment(Flight.depart).format('DD/MM/YYYY HH:MM')
                                     td.text-center=moment(Flight.end).format('DD/MM/YYYY HH:MM')

@@ -20,12 +20,10 @@ router.post("/", async function(req, res) {
     console.log(userInput);
     try {
         const result = await loginModel.getOne(userInput.phone);
-        const result2 = await loginModel.getClient(userInput.phone);
         console.log(result);
         if (result) {
             if (bcrypt.compareSync(userInput.password, result[0].password)) {
                 req.session.user = result[0];
-                req.session.client = result2[0];
 
                 if (result[0].type == '2') {
                     res.redirect('/admin');
@@ -46,6 +44,7 @@ router.post("/", async function(req, res) {
         }
     } catch (err) {
         console.log("login failed");
+        console.log(err)
         var userInfo = { status: "failed phone", phone: userInput.phone, password: userInput.password }
         var viewInfo = { data: userInfo }
         res.render("login/index", viewInfo);

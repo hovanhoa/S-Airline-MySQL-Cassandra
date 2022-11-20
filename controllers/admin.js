@@ -34,11 +34,18 @@ router.post("/add", async function (req, res) {
     var depart = req.body.depart;
     var end = req.body.end;
     var price = req.body.price;
-    console.log(end);
+    
     try {
         await adminModel.insertOne(id, brand, from, to, depart, end, price);
+        for (var i = 1; i <= 24; ++i) {
+            for (var j of 'ABCDEF') {
+                var id_seat = j + ('0' + String(i)).slice(-2) + id 
+                await adminModel.insertSeat(id_seat, '', id, '0')
+            }
+        }
     } catch (err) {
-        return res.redirect("/500");
+        console.log(err)
+        return res.status(500).send();
     }
 
     return res.redirect("editairline");
@@ -55,7 +62,8 @@ router.post("/edit", async function (req, res) {
     try {
         await adminModel.updateOne(id, brand, from, to, depart, end, price);
     } catch (err) {
-        res.redirect("/500");
+        console.log(err)
+        return res.status(500).send();
     }
     return res.redirect("editairline"); 
 });
@@ -66,7 +74,7 @@ router.post("/delete", async function (req, res) {
     try {
         await adminModel.deleteOne(id);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editairline");
@@ -87,7 +95,7 @@ router.post("/addaccount", async function (req, res) {
     try {
         await adminModel.insertAccount(phone, type);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editaccount");
@@ -100,7 +108,7 @@ router.post("/editAccount", async function (req, res) {
     try {
         await adminModel.updateAccount(phone, type);
     } catch (err) {
-        res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editaccount"); 
@@ -112,7 +120,7 @@ router.post("/deleteaccount", async function (req, res) {
     try {
         await adminModel.deleteAccount(phone);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
     return res.redirect("editaccount");
 });
@@ -131,7 +139,7 @@ router.post("/deletebrand", async function (req, res) {
     try {
         await adminModel.deleteBrand(id);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editbrand");
@@ -143,7 +151,7 @@ router.post("/addbrand", async function (req, res) {
     try {
         await adminModel.insertBrand(id, name);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editbrand");
@@ -164,7 +172,7 @@ router.post("/deleteairport", async function (req, res) {
     try {
         await adminModel.deleteAirport(id);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editairport");
@@ -177,7 +185,7 @@ router.post("/addairport", async function (req, res) {
     try {
         await adminModel.insertAirport(id, name);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editairport");
@@ -198,7 +206,7 @@ router.post("/addbank", async function (req, res) {
     try {
         await adminModel.insertBank(id, name);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editbank");
@@ -210,7 +218,7 @@ router.post("/deletebank", async function (req, res) {
     try {
         await adminModel.deleteBank(id);
     } catch (err) {
-        return res.redirect("/500");
+        return res.status(500).send();
     }
 
     return res.redirect("editbank");

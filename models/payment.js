@@ -1,30 +1,23 @@
-var mysql = require("mysql-await");
+const client = require('./db')
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "flight_ticket_booking",
-});
+var connection = client.client
 
 exports.getBank = async function () {
-    return await connection.awaitQuery("SELECT * FROM bank");
+    return (await connection.execute('SELECT * FROM bank')).rows;
 };
 
 exports.getOneFlight = async function (id) {
-    return await connection.awaitQuery(`SELECT * FROM flight WHERE id = "${id}";`);
+    return (await connection.execute(`SELECT * FROM flight WHERE id = ?;`, [id], { prepare: true })).rows;
 };
 
 exports.updateSeat = async function (id) {
-    await connection.awaitQuery(`UPDATE seat SET type = 2 WHERE id = "${id}"`);
+    await connection.execute(`UPDATE seat SET type = 2 WHERE id = ?`, [id], { prepare: true });
 };
 
-exports.insertClientSeat = async function (phone, id, name, address, birthday, id_number, email, create_time, price) {
-    await connection.awaitQuery(`INSERT INTO client_seat (phone, id_seat, name, birthday, id_number, address, email, create_time, price)
-                    VALUE (${phone}, "${id}", "${name}", "${birthday}", "${id_number}", "${address}", "${email}", "${create_time}", ${price});`);
+exports.insertClientSeat = async function (phone, id, flight_id, price) {
+    await connection.execute(`INSERT INTO seat (phone, id, flight_id, price) VALUE (?, ?, ?, ?);`[phone, id, flight_id, price], { prepare: true });
 };
 
-exports.insertClient = async function (phone, name, birthday, id_number, address, email, bank_name, bank_number) {
-    await connection.awaitQuery(`INSERT INTO client (phone, name, birthday, id_number, address, email, bank_name, bank_number) 
-    VALUE ("${phone}","${name}", "${birthday}", "${id_number}","${address}" ,"${email}" ,"${bank_name}" ,"${bank_number}");`);
+exports.insertClient = async function (phone, name, birthday, address, email, bank_name, bank_number) {
+    await connection.execute(`INSERT INTO user (phone, name, birthday, address, email, bank_name, bank_number) VALUES (?, ?, ?, ?, ?, ?, ?);`, [phone, name, birthday, address, email, bank_name, bank_number], { prepare: true });
 };

@@ -7,7 +7,6 @@ router.get("/", async function (req, res) {
     const user = req.session.user;
     let listAccount = await customerModel.getOneAccount(user.phone);
     let listFlight = await customerModel.getListFlight(user.phone);
-    console.log(listAccount);
     var viewBag = {
         listAccount: listAccount,
         listFlight: listFlight,
@@ -16,7 +15,7 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/edit", async function (req, res) {
-    var name =  req.body.name;
+    var name = req.body.name;
     var address = req.body.address;
     var phone = req.body.phone;
     var email = req.body.email;
@@ -27,28 +26,30 @@ router.post("/edit", async function (req, res) {
     try {
         await customerModel.updateOne(name, address, phone, email, sex, nationality, birthday);
         const result = await customerModel.getOne(phone);
-        const result2 = await customerModel.getClient(phone);
+        console.log(result)
+        // const result2 = await customerModel.getClient(phone);
         req.session.user = result[0];
-        req.session.client = result2[0];
+        // req.session.client = result2[0];
     } catch (err) {
-        res.redirect("/500");
+        console.log(err)
+        res.status(500);
     }
 
-    return res.redirect("/customer"); 
+    return res.redirect("/customer");
 });
 
 router.post("/", async function (req, res) {
-    var password =  req.body.password_; //mat khau hien tai 
+    var password = req.body.password_; //mat khau hien tai 
     var phone = req.body.phone;
     var pwd = req.body.password;
-    var confirmPassword= req.body.confirmPassword;
+    var confirmPassword = req.body.confirmPassword;
 
     const user = req.session.user;
     let listAccount = await customerModel.getOneAccount(user.phone);
     let listFlight = await customerModel.getListFlight(user.phone);
-    if (password){
+    if (password) {
         if (!bcrypt.compareSync(password, pwd)) {
-            var userInfo = { status: "failed password"}
+            var userInfo = { status: "failed password" }
             var viewBag = {
                 listAccount: listAccount,
                 listFlight: listFlight,
@@ -56,21 +57,20 @@ router.post("/", async function (req, res) {
             }
             res.render("customer/index", viewBag);
         }
-        else{
+        else {
 
-    await customerModel.updatePass(confirmPassword, phone);
-    var userInfo = { status: "password"}
-    var viewBag = {
-        listAccount: listAccount,
-        listFlight: listFlight,
-        data: userInfo
+            await customerModel.updatePass(confirmPassword, phone);
+            var userInfo = { status: "password" }
+            var viewBag = {
+                listAccount: listAccount,
+                listFlight: listFlight,
+                data: userInfo
+            }
+            res.render("customer/index", viewBag);
+
+        }
     }
-    res.render("customer/index", viewBag);
-  
-    }
-    res.redirect("/customer"); 
-    }
-  
+
 
 });
 

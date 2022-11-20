@@ -44,14 +44,14 @@ block content
 															label Địa điểm khởi hành
 															select.form-control(name='from')
 																option(disabled selected value) Địa điểm khởi hành
-																each ariport in airportList
-																	option(value=ariport.id)=ariport.name
+																each airport in airportList
+																	option(value=airport.id)=airport.name
 														.form-group
 															label Địa điểm đến
 															select.form-control(name ='to' )
 																option(disabled selected value) Địa điểm đến
-																each ariport in airportList
-																	option(value=ariport.id)=ariport.name
+																each airport in airportList
+																	option(value=airport.id)=airport.name
 														.form-group
 															label Thời gian khởi hành
 															input.form-control(type='datetime-local' name='depart')
@@ -82,17 +82,17 @@ block content
 												tr 
 													td.text-center=flight.id
 													td.text-center=flight.brand 
-													td.text-center=flight.from 
-													td.text-center=flight.to 
+													td.text-center=flight.from_airport
+													td.text-center=flight.to_airport
 													td.text-center=moment(flight.depart).format('DD/MM/YYYY HH:mm')
 													td.text-center=moment(flight.end).format('DD/MM/YYYY HH:mm')
 													td.text-center=flight.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".") +" VND"
 													td.text-center 
 														btn.btn-view.btn.btn-success.btn-xs(style="margin-right: 5px;", data-id=flight.id, data-brand=flight.brand,
-															data-from=flight.from, data-to=flight.to, data-depart=flight.depart, data-end=flight.end, data-price=flight.price) 
+															data-from=flight.from_airport, data-to=flight.to_airport, data-depart=flight.depart, data-end=flight.end, data-price=flight.price) 
 															i.fas.fa-eye
 														btn.btn-edit.btn.btn-primary.btn-xs(style="margin-right: 5px;", data-id=flight.id, data-brand=flight.brand,
-															data-from=flight.from, data-to=flight.to, data-depart=flight.depart, data-end=flight.end, data-price=flight.price) 
+															data-from=flight.from_airport, data-to=flight.to_airport, data-depart=flight.depart, data-end=flight.end, data-price=flight.price) 
 															i.fas.fa-edit
 														btn.btn-delete.btn.btn-danger.btn-xs(data-id=flight.id)
 															i.fas.fa-trash 
@@ -341,14 +341,14 @@ block content
 															label Địa điểm khởi hành
 															select.form-control(name='from')
 																option(disabled selected value) Địa điểm khởi hành
-																each ariport in airportList
-																	option(value=ariport.id)=ariport.name
+																each airport in airportList
+																	option(value=airport.id)=airport.name
 														.form-group
 															label Địa điểm đến
 															select.form-control(name ='to' )
 																option(disabled selected value) Địa điểm đến
-																each ariport in airportList
-																	option(value=ariport.id)=ariport.name
+																each airport in airportList
+																	option(value=airport.id)=airport.name
 														.form-group
 															label Thời gian khởi hành
 															input.form-control(type='datetime-local' name='depart')

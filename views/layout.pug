@@ -89,7 +89,7 @@ html(lang='en')
 										
 									if(session.user)
 										.sign_btn
-											a(href='/customer') #{session.client.name}
+											a(href='/customer') #{session.user.name}
 									else 
 										.sign_btn
 											a(href='/login') Đăng nhập

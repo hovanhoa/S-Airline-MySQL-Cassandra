@@ -1,24 +1,19 @@
-var mysql = require("mysql-await");
+const client = require('./db')
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "flight_ticket_booking",
-});
+var connection = client.client
 
 exports.getListFlight = async function (from, to, time) {
-    return await connection.awaitQuery(`SELECT * FROM flight WHERE flight.from = "${from}" AND flight.to = "${to}" AND flight.depart LIKE "${time}%"; `);
+    return (await connection.execute(`SELECT * FROM flight WHERE from_airport = ? AND to_airport = ? AND depart LIKE ?;`, [from, to, time], { prepare: true })).rows;
 };
 
 exports.getAllFlight = async function () {
-    return await connection.awaitQuery(`SELECT * FROM flight;`);
+    return (await connection.execute(`SELECT * FROM flight;`)).rows;
 };
 
 exports.getAllSeat = async function () {
-    return await connection.awaitQuery(`SELECT * FROM seat;`);
+    return (await connection.execute(`SELECT * FROM seat;`)).rows;
 };
 
 exports.getOneFlight = async function (id) {
-    return await connection.awaitQuery(`SELECT * FROM flight WHERE id = "${id}";`);
+    return (await connection.execute(`SELECT * FROM flight WHERE id = ?;`, [id], { prepare: true })).rows;
 };

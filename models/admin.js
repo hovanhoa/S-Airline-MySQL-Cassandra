@@ -1,99 +1,84 @@
-var mysql = require("mysql-await");
+const client = require('./db')
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "flight_ticket_booking",
-});
+var connection = client.client
 
 exports.getAll = async function () {
-    return await connection.awaitQuery("SELECT * FROM flight");
+    return (await connection.execute("SELECT * FROM flight")).rows;
 };
 
 exports.getAirport = async function () {
-    return await connection.awaitQuery("SELECT * FROM airport");
+    return (await connection.execute("SELECT * FROM airport")).rows;
 };
 
 exports.getBrand = async function () {
-    return await connection.awaitQuery("SELECT * FROM brand");
+    return (await connection.execute("SELECT * FROM brand")).rows;
 };
 
 
 exports.getAccount = async function () {
-    return await connection.awaitQuery("SELECT * FROM account");
+    return (await connection.execute("SELECT * FROM user")).rows;
 };
 
 exports.getTicket = async function () {
-    return await connection.awaitQuery("SELECT * FROM client_seat");
+    return (await connection.execute("SELECT * FROM seat;")).rows;
 };
 
 exports.getBank = async function () {
-    return await connection.awaitQuery("SELECT * FROM bank");
+    return (await connection.execute("SELECT * FROM bank")).rows;
 };
 
 exports.getSeat = async function () {
-    return await connection.awaitQuery("SELECT * FROM seat");
+    return (await connection.execute("SELECT * FROM seat")).rows;
 };
 
 exports.insertOne = async function (id, brand, from, to, depart, end, price) {
-    await connection.awaitQuery(
-        "INSERT INTO `flight`(`id`, `brand`, `from`, `to`, `depart`, `end`,  `price`) VALUES ('"+ id +"','"+ brand +"','"+ from +"','"+ to +"','"+ depart + "','"+ end + "','"+ price +"')"
-    );
+    await connection.execute("INSERT INTO flight(id, brand, from_airport, to_airport, depart, end,  price) VALUES (?, ?, ?, ?, ?, ?, ?);", [id, brand, from, to, depart, end, price], { prepare: true });
 };
 
-exports.updateOne = async function (id, brand, from, to, depart, end , price) {
-    await connection.awaitQuery(
-        "UPDATE `flight` SET `brand`='" + brand +"',`from`='" + from +"',`to`='" + to +"',`depart`='" + depart +"',`end`='" + end +"',`price`='" + price +"' WHERE `id`='" + id +"'"
-    );
+exports.updateOne = async function (id, brand, from, to, depart, end, price) {
+    await connection.execute("UPDATE flight SET brand=?, from_airport=?, to_airport=?, depart=?, end=?, price=? WHERE id=?", [brand, from, to, depart, end, price, id], { prepare: true });
 };
 
 exports.deleteOne = async function (id) {
-    await connection.awaitQuery("DELETE FROM `flight` WHERE `id` = '" + id +"'");
+    await connection.execute("DELETE FROM flight WHERE id = ?;", [id], { prepare: true });
 };
 
 exports.insertAccount = async function (phone, type) {
-    await connection.awaitQuery(
-        "INSERT INTO `account`(`phone`, `type`) VALUES ('"+ phone +"','"+ type +"')"
-    );
+    await connection.execute("INSERT INTO user(phone, type) VALUES (?, ?);", [phone, type], { prepare: true });
 };
 
 exports.updateAccount = async function (phone, type) {
-    await connection.awaitQuery(
-        "UPDATE `account` SET `type`='" + type +"' WHERE `phone`='" + phone +"'"
-    );
+    await connection.execute("UPDATE user SET type = ? WHERE phone = ?;", [type, phone], { prepare: true });
 };
 
 exports.deleteAccount = async function (phone) {
-    await connection.awaitQuery("DELETE FROM `account` WHERE `phone` = '" + phone +"'");
+    await connection.execute("DELETE FROM account WHERE phone = ?;", [phone], { prepare: true });
 };
 
 exports.insertBrand = async function (id, name) {
-    await connection.awaitQuery(
-        "INSERT INTO `brand`(`id`, `name`) VALUES ('"+ id +"','"+ name +"')"
-    );
+    await connection.execute("INSERT INTO brand(id, name) VALUES (?, ?);", [id, name], { prepare: true });
 };
 
 exports.deleteBrand = async function (id) {
-    await connection.awaitQuery("DELETE FROM `brand` WHERE `id` = '" + id +"'");
+    await connection.execute("DELETE FROM brand WHERE id = ?", [id], { prepare: true });
 };
 
 exports.insertAirport = async function (id, name) {
-    await connection.awaitQuery(
-        "INSERT INTO `airport`(`id`, `name`) VALUES ('"+ id +"','"+ name +"')"
-    );
+    await connection.execute("INSERT INTO airport(id, name) VALUES (?, ?);", [id, name], { prepare: true });
 };
 
 exports.deleteAirport = async function (id) {
-    await connection.awaitQuery("DELETE FROM `airport` WHERE `id` = '" + id +"'");
+    await connection.execute("DELETE FROM airport WHERE id = ?;", [id], { prepare: true });
 };
 
 exports.insertBank = async function (id, name) {
-    await connection.awaitQuery(
-        "INSERT INTO `bank`(`id`, `name`) VALUES ('"+ id +"','"+ name +"')"
-    );
+    await connection.execute("INSERT INTO bank(id, name) VALUES (?, ?);", [id, name], { prepare: true });
 };
 
 exports.deleteBank = async function (id) {
-    await connection.awaitQuery("DELETE FROM `bank` WHERE `id` = '" + id +"'");
+    await connection.execute("DELETE FROM bank WHERE id = ?;", [id], { prepare: true });
+};
+
+exports.insertSeat = async function (id, phone, flight_id, type) {
+    await connection.execute("INSERT INTO seat(id, phone, flight_id, type) VALUES (?, ?, ?, ?);", [id, phone, flight_id, type], { prepare: true });
 };
