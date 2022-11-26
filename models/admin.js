@@ -82,3 +82,7 @@ exports.deleteBank = async function (id) {
 exports.insertSeat = async function (id, phone, flight_id, type) {
     await connection.execute("INSERT INTO seat(id, phone, flight_id, type) VALUES (?, ?, ?, ?);", [id, phone, flight_id, type], { prepare: true });
 };
+
+exports.deleteSeat = async function (flight_id) {
+    await connection.execute("DELETE FROM seat WHERE flight_id = ?;", [flight_id], { prepare: true });
+};

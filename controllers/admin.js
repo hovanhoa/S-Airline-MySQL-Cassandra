@@ -73,6 +73,7 @@ router.post("/delete", async function (req, res) {
     var id = req.body.id;
     try {
         await adminModel.deleteOne(id);
+        await adminModel.deleteSeat(id);
     } catch (err) {
         return res.status(500).send();
     }
