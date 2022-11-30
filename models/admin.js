@@ -21,11 +21,11 @@ exports.getBrand = async function () {
 
 
 exports.getAccount = async function () {
-    return await connection.awaitQuery("SELECT * FROM account");
+    return await connection.awaitQuery("SELECT phone, type, create_time FROM account");
 };
 
 exports.getTicket = async function () {
-    return await connection.awaitQuery("SELECT * FROM client_seat");
+    return await connection.awaitQuery("SELECT create_time, price FROM client_seat");
 };
 
 exports.getBank = async function () {
@@ -33,7 +33,7 @@ exports.getBank = async function () {
 };
 
 exports.getSeat = async function () {
-    return await connection.awaitQuery("SELECT * FROM seat");
+    return await connection.awaitQuery("SELECT id, type, id_flight FROM seat");
 };
 
 exports.insertOne = async function (id, brand, from, to, depart, end, price) {
