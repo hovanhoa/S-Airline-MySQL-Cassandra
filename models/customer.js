@@ -13,7 +13,7 @@ exports.getOneAccount = async function (phone) {
 };
 
 exports.getListFlight = async function (phone) {
-    return await connection.awaitQuery(`SELECT * FROM (client_seat JOIN (seat JOIN (flight JOIN brand ON flight.brand= brand.id) ON seat.id_flight = flight.id) ON client_seat.id_seat = seat.id) WHERE phone=  ${phone};`);
+    return await connection.awaitQuery(`SELECT seat.id_flight, brand.name, client_seat.id_seat, flight.from, flight.depart, flight.end, flight.price FROM (client_seat JOIN (seat JOIN (flight JOIN brand ON flight.brand= brand.id) ON seat.id_flight = flight.id) ON client_seat.id_seat = seat.id) WHERE phone=${phone};`);
 };
 
 exports.updateOne = async function (name, address, phone, email, sex, nationality, birthday) {

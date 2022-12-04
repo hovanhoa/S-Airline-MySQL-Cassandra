@@ -7,10 +7,6 @@ var connection = mysql.createConnection({
     database: "flight_ticket_booking",
 });
 
-exports.getListFlight = async function (from, to, time) {
-    return await connection.awaitQuery(`SELECT * FROM flight WHERE flight.from = "${from}" AND flight.to = "${to}" AND flight.depart LIKE "${time}%"; `);
-};
-
 exports.getAllFlight = async function () {
     return await connection.awaitQuery(`SELECT * FROM flight;`);
 };
