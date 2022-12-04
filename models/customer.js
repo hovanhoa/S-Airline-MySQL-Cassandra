@@ -6,6 +6,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "",
     database: "flight_ticket_booking",
+    port: 3307,
 });
 
 exports.getOneAccount = async function (phone) {
