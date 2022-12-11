@@ -11,7 +11,7 @@ exports.insertOne = async function (phone, name, password, type, time) {
 // };
 
 exports.getOne = async function (phone) {
-    return (await connection.execute(`SELECT * FROM user WHERE phone = ?;`, [phone], { prepare: true })).rows
+    return (await connection.execute(`SELECT phone, name, password, type FROM user WHERE phone = ?;`, [phone], { prepare: true })).rows
 };
 
 exports.updatePass = async function (phone, pass) {

@@ -40,14 +40,14 @@ block content
                         .col-sm-6.body-row-left(style='padding-top: 5px;')
                           .body-row-inner
                             span.flight-ticket-booking-title Từ: 
-                            span.flight-ticket-booking-value #{Flight[0]["from"]}
+                            span.flight-ticket-booking-value #{Flight[0]["from_airport"]}
                           .body-row-inner
                             span.flight-ticket-booking-title Lúc: 
                             span.flight-ticket-booking-value #{ moment(Flight[0]["depart"]).format('DD/MM/YYYY HH:mm')}
                         .col-sm-6(style='padding-top: 5px;')
                           .body-row-inner
                             span.flight-ticket-booking-title Đến: 
-                            span.flight-ticket-booking-value #{Flight[0]["to"]}
+                            span.flight-ticket-booking-value #{Flight[0]["to_airport"]}
                           .body-row-inner
                             span.flight-ticket-booking-title Lúc: 
                             span.flight-ticket-booking-value #{ moment(Flight[0]["end"]).format('DD/MM/YYYY HH:mm')}

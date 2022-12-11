@@ -45,7 +45,7 @@ block content
                     .modal-footer
                         button.btn-editCustomer.btn-block.text-center.btn-lg.btn-info.btn-toastr(type='submit' style="margin-top: 5px; width= auto;font-size:15px;"
                         data-name = listAccount[0].name, data-address = listAccount[0].address, data-phone=listAccount[0].phone
-                        data-email = listAccount[0].email, data-password = listAccount[0].password, data-sex = listAccount[0].Sex,
+                        data-email = listAccount[0].email, data-password = listAccount[0].password, data-sex = listAccount[0].sex,
                         data-nationality = listAccount[0].nationality data-birthday = moment(listAccount[0].birthday).format('YYYY-MM-DD')) Chỉnh sửa
                 .col-3(style='margin:30px 0 0; padding:8px 16px, text-align:center;')
                     a#changePass(href='#' data-password = listAccount[0].password, data-phone=listAccount[0].phone) Đổi mật khẩu
@@ -642,10 +642,11 @@ block content
                         tbody
                             each Flight in listFlight
                                 tr 
-                                    td.text-center=Flight.id_flight
-                                    td.text-center=Flight.name
+                                    td.text-center=Flight.flight_id
+                                    //- td.text-center=Flight.name
                                     td.text-center=Flight.id.substring(0,3)
-                                    td.text-center=Flight.from
+                                    td.text-center=Flight.from_airport
+                                    td.text-center=Flight.to_airport
                                     td.text-center=moment(Flight.depart).format('DD/MM/YYYY HH:MM')
                                     td.text-center=moment(Flight.end).format('DD/MM/YYYY HH:MM')
                                     td.text-center=Flight.price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".") +" VND"

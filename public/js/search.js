@@ -139,7 +139,7 @@ searchResult.onclick = function (event) {
     $.post("/allSeat", function(data) {
         const listSeat = [];
         for(let i = 0; i < data.data.length; i ++) {
-            if(data.data[i]["id_flight"] == id) listSeat.push(data.data[i]);
+            if(data.data[i]["flight_id"] == id) listSeat.push(data.data[i]);
         }
         for(let i = 0; i < listSeat.length; i ++) {
             listSeat[i]["id"] = listSeat[i]["id"].substring(0,3);

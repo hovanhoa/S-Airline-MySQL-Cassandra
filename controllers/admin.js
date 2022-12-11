@@ -40,7 +40,7 @@ router.post("/add", async function (req, res) {
         for (var i = 1; i <= 24; ++i) {
             for (var j of 'ABCDEF') {
                 var id_seat = j + ('0' + String(i)).slice(-2) + id 
-                await adminModel.insertSeat(id_seat, '', id, '0')
+                await adminModel.insertSeat(id_seat, '', id, '0', from, to, price, brand, depart, end)
             }
         }
     } catch (err) {
@@ -227,35 +227,31 @@ router.post("/deletebank", async function (req, res) {
 
 router.post("/listFlight", async function (req, res) {
     let listFlight = await adminModel.getAll();
-    if(listFlight.length>0) {
-        res.json({
-            data: listFlight
-    })};
+    res.json({
+        data: listFlight
+    });
 });
 
 router.post("/listAccount", async function (req, res) {
     let listAccount = await adminModel.getAccount();
-    if(listAccount.length>0) {
-        res.json({
-            data: listAccount
-    })};
+    res.json({
+        data: listAccount
+    });
 });
 
 router.post("/listTicket", async function (req, res) {
     let listTicket = await adminModel.getTicket();
-    if(listTicket.length>0) {
-        res.json({
-            data: listTicket
-    })};
+    res.json({
+        data: listTicket
+    });
 });
 
 
 router.post("/listSeat", async function (req, res) {
     let listSeat = await adminModel.getSeat();
-    if(listSeat.length>0) {
-        res.json({
-            data: listSeat
-    })};
+    res.json({
+        data: listSeat
+    });
 });
 
 

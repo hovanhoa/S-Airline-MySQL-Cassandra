@@ -25,6 +25,12 @@ CREATE TABLE seat (
     flight_id varchar,
     phone varchar,
     type smallint,
+    from_airport varchar,
+    to_airport varchar,
+    brand varchar,
+    depart timestamp,
+    end timestamp,
+    price int,
     PRIMARY KEY (id)
 );
 

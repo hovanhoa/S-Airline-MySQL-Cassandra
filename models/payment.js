@@ -3,11 +3,11 @@ const client = require('./db')
 var connection = client.client
 
 exports.getBank = async function () {
-    return (await connection.execute('SELECT * FROM bank')).rows;
+    return (await connection.execute('SELECT id, name FROM bank')).rows;
 };
 
 exports.getOneFlight = async function (id) {
-    return (await connection.execute(`SELECT * FROM flight WHERE id = ?;`, [id], { prepare: true })).rows;
+    return (await connection.execute(`SELECT from_airport, to_airport, depart, end FROM flight WHERE id = ?;`, [id], { prepare: true })).rows;
 };
 
 exports.updateSeat = async function (id) {
@@ -15,9 +15,6 @@ exports.updateSeat = async function (id) {
 };
 
 exports.insertClientSeat = async function (phone, id, flight_id, price) {
-    await connection.execute(`INSERT INTO seat (phone, id, flight_id, price) VALUE (?, ?, ?, ?);`[phone, id, flight_id, price], { prepare: true });
-};
-
-exports.insertClient = async function (phone, name, birthday, address, email, bank_name, bank_number) {
-    await connection.execute(`INSERT INTO user (phone, name, birthday, address, email, bank_name, bank_number) VALUES (?, ?, ?, ?, ?, ?, ?);`, [phone, name, birthday, address, email, bank_name, bank_number], { prepare: true });
+    var flight = (await connection.execute(`SELECT from_airport, to_airport, depart, end, brand FROM flight WHERE id = ?;`, [id], { prepare: true })).rows[0];
+    await connection.execute(`INSERT INTO seat (phone, id, flight_id, price, brand, to_airport, from_airport, depart, end, type) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`[phone, id, flight_id, price, flight.brand, flight.to_airport, flight.from_airport, flight.depart, flight.end, "0"], { prepare: true });
 };

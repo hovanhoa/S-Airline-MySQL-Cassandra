@@ -32,7 +32,7 @@ router.post("/", async function (req, res) {
         await paymentModels.updateSeat(cart["items"][i]);
     }
     for(let i = 0; i < cart["items"].length; i ++) {
-        await paymentModels.insertClientSeat(client_seat["phone"], cart["items"][i], client_seat["name"], client_seat["address"], client_seat["birthday"], client_seat["id_number"], client_seat["email"],create_date, cart["totalPrice"]);
+        await paymentModels.insertClientSeat(client_seat["phone"], cart["items"][i], cart["totalPrice"]);
     }
     return res.redirect("payment/QR");
 });

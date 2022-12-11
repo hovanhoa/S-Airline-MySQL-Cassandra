@@ -25,14 +25,14 @@ router.post("/edit", async function (req, res) {
 
     try {
         await customerModel.updateOne(name, address, phone, email, sex, nationality, birthday);
-        const result = await customerModel.getOne(phone);
-        console.log(result)
+        const result = await customerModel.getOneAccount(phone);
+        // console.log(result)
         // const result2 = await customerModel.getClient(phone);
         req.session.user = result[0];
         // req.session.client = result2[0];
     } catch (err) {
         console.log(err)
-        res.status(500);
+        res.status(500).send();
     }
 
     return res.redirect("/customer");

@@ -1,12 +1,18 @@
 version: '3.9'
 
 services:
-  db:
+  cassandra:
     image: cassandra
     volumes:
       - db_data:/var/lib/cassandra
+  app:
+    image: node:18
+    volumes:
+      - .:/opt/s-airline
+    command: node index.js
     ports:
-      - 9042:9042
+      - 5000:5000
+    working_dir:  /opt/s-airline
 
 volumes:
   db_data:
