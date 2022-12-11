@@ -75,6 +75,7 @@ router.post("/delete", async function (req, res) {
         await adminModel.deleteOne(id);
         await adminModel.deleteSeat(id);
     } catch (err) {
+        console.log(err)
         return res.status(500).send();
     }
 

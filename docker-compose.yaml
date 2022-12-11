@@ -9,7 +9,7 @@ services:
     image: node:18
     volumes:
       - .:/opt/s-airline
-    command: node index.js
+    command: npx nodemon
     ports:
       - 5000:5000
     working_dir:  /opt/s-airline
